@@ -1,0 +1,24 @@
+{
+  "name": "BakersBot",
+  "version": "1.0.0",
+  "description": "BakersBot",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kevin-Jansen/BakersBot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kevin-Jansen/BakersBot/issues"
+  },
+  "homepage": "https://github.com/Kevin-Jansen/BakersBot#readme",
+  "devDependencies": {},
+  "dependencies": {
+    "discord.js": "^12.3.1"
+  }
+}
