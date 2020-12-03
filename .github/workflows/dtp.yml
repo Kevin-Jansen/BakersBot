@@ -1,0 +1,52 @@
+name: Deploy to production
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+
+      - name: Install npm packages & compile assets
+        id: npm
+        run: npm install
+
+      - name: Deploy to server
+        id: deploy
+        uses: Pendect/action-rsyncer@v1.1.0
+        env:
+          DEPLOY_KEY: ${{secrets.DEPLOY_KEY}}
+        with:
+          flags: '-avzr --delete'
+          options: ''
+          ssh_options: ''
+          src: '/'
+          dest: 'root@server.kevin-jansen.dev:/var/www/vhosts/bakers-bot.com/httpdocs/'
+
+      - name: Display status from deploy
+        run: echo "${{steps.deploy.outputs.status}}"
+
+      - name: Reboot Bakers-Bot
+        id: reboot
+        uses: appleboy/ssh-action@master
+        with:
+          host: 'server.kevin-jansen.dev'
+          username: 'root'
+          key: ${{secrets.DEPLOY_KEY}}
+          port: '22'
+          script: |
+            cd /var/www/vhosts/bakers-bot.com
+            chown -R bakers-bot httpdocs/
+            pm2 restart bakersbot
