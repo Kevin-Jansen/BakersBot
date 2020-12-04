@@ -26,13 +26,14 @@ client.on("message", (message) => {
     if (message.author.bot || !message.content.startsWith(config.prefix)) return;
     // Seeks command
     const args = message.content.slice(config.prefix.length).trim().split(/ +/);
-    const command = args.shift().toLowerCase();
+    const commandName = args.shift().toLowerCase();
 
     // Verify that the command has been loaded into the commands collection
-    if (!client.commands.has(command)) return message.reply('That command does not exists!');
+    if (!client.commands.has(commandName)) return message.reply('That command does not exists!');
+    const command = client.commands.get(commandName);
 
     try {
-        client.commands.get(command).execute(client, message, args);
+        command.execute(client, message, args);
     } catch (e) {
         console.error(e);
         message.reply('Whoopsydoopsie! Something went wrong executing that command!');
@@ -41,6 +42,8 @@ client.on("message", (message) => {
 
 // Automated features
 client.on("guildMemberAdd", member => {
+
+    console.log('New member')
 
     //guild variables
     const guild = member.guild;
@@ -63,7 +66,7 @@ client.on("guildMemberAdd", member => {
 // this event will only trigger one time after logging in
 client.once('ready', () => {
     console.log('Ready');
-})
+});
 
 // login to Discord with your app's token
 client.login(config.token);
