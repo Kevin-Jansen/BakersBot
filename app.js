@@ -8,6 +8,7 @@ const config = require('./config.json');
 // Construct a new Discord Client
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
+client.prefix = config.prefix;
 
 // Discover what command files exists in the filesystem
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
@@ -17,28 +18,21 @@ commandFiles.map(commandFile => {
     const command = require(`./commands/${commandFile}`);
     // set a new item in the Collection
     // with the key as the command name and the value as the exported module
+    console.log(`Loading ${command.name} command.`)
     client.commands.set(command.name, command);
 });
+console.log('All commands have been loaded')
 
-// command based features (dynamically injected from ./commands)
-client.on("message", (message) => {
-    // if a message is sent
-    if (message.author.bot || !message.content.startsWith(config.prefix)) return;
-    // Seeks command
-    const args = message.content.slice(config.prefix.length).trim().split(/ +/);
-    const commandName = args.shift().toLowerCase();
+const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
+eventFiles.map(eventFile => {
+    const event = require(`./events/${eventFile}`);
 
-    // Verify that the command has been loaded into the commands collection
-    if (!client.commands.has(commandName)) return message.reply('That command does not exists!');
-    const command = client.commands.get(commandName);
+    let eventName = eventFile.split('.')[0]
+    console.log(`Watching for ${eventName} event.`)
+    client.on(eventName, event.bind(null, client));
+})
 
-    try {
-        command.execute(client, message, args);
-    } catch (e) {
-        console.error(e);
-        message.reply('Whoopsydoopsie! Something went wrong executing that command!');
-    }
-});
+console.log('All event are being watched.')
 
 // Automated features
 client.on("guildMemberAdd", member => {
@@ -65,7 +59,7 @@ client.on("guildMemberAdd", member => {
 // when the client is ready, run this code
 // this event will only trigger one time after logging in
 client.once('ready', () => {
-    console.log('Ready');
+    console.log('Bakers Bot is ready to Rock & Roll!');
 });
 
 // login to Discord with your app's token
