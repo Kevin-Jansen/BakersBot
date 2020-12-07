@@ -39,6 +39,7 @@ module.exports = {
                 );
                 embed.setDescription(`Enjoy your ${client.showdown.item}!`);
                 message.channel.send(embed);
+                client.showdown = null;
             }, 30000);
         } else {
             if (client.showdown === null && args.length == 0)
