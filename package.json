@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Kevin-Jansen/BakersBot#readme",
   "dependencies": {
-    "discord.js": "^12.3.1"
+    "discord.js": "^12.3.1",
+    "node-fetch": "^2.6.1"
   }
 }
