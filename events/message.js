@@ -9,8 +9,14 @@ module.exports = (client, message) => {
     if (!client.commands.has(commandName)) return message.reply('That command does not exists!');
     const command = client.commands.get(commandName);
 
-    if (command.guildOnly && message.channel.type === 'dm') {
-        return message.reply('I can\'t execute that command inside DMs!');
+    // Conditions for a command to be executed
+    if (command.guildOnly && message.channel.type === 'dm') return message.reply('I can\'t execute that command inside DMs!');
+    if (command.args && args.length < 1) {
+        let response = `You didn't specify any arguments, and I need those you silly!`
+
+        if (command.usage) response += `\nThe proper usage would be: \`${client.prefix}${command.name} ${command.usage}\``
+
+        return message.reply(response)
     }
 
     try {

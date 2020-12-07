@@ -1,6 +1,8 @@
 module.exports = {
     name: 'purge',
     description: 'Purges the given amount of messages in a channel. Usage: `.purge {amount}`',
+    args: true,
+    usage: '<amount>',
     execute(client, message, args) {
         //admin privelage commands below only
         if (!message.member.roles.cache.find(r => (r.name === 'Head Glazer' || r.name === 'Master Baker'))) return message.reply(`You don't have enough permissions for that sorry!`);
