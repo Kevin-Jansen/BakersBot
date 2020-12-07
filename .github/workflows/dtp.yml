@@ -30,7 +30,7 @@ jobs:
           DEPLOY_KEY: ${{secrets.DEPLOY_KEY}}
         with:
           flags: '-avzr --delete'
-          options: ''
+          options: '--exclude-from="exclude.txt"'
           ssh_options: ''
           src: '/'
           dest: 'root@server.kevin-jansen.dev:/var/www/vhosts/bakers-bot.com/httpdocs/'
