@@ -1,4 +1,4 @@
-module.exports = (client, message) => {
+module.exports = (client, member) => {
     console.log('New member')
 
     //guild variables
@@ -6,7 +6,8 @@ module.exports = (client, message) => {
 
     //member variables
     const owner = guild.owner
-    const kevin = client.users.cache.get('253176948128350208')
+
+    const kevin = member.guild.members.cache.get('253176948128350208')
 
     // channels
     const cache = guild.channels.cache;
