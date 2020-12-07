@@ -11,7 +11,6 @@ module.exports = {
             .catch(console.error);
 
         const embed = new Discord.MessageEmbed();
-        // embed.setAuthor('The Master Joker')
         embed.setTitle(setup);
         embed.setDescription(punchline);
 
