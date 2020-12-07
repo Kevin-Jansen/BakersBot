@@ -9,6 +9,10 @@ module.exports = (client, message) => {
     if (!client.commands.has(commandName)) return message.reply('That command does not exists!');
     const command = client.commands.get(commandName);
 
+    if (command.guildOnly && message.channel.type === 'dm') {
+        return message.reply('I can\'t execute that command inside DMs!');
+    }
+
     try {
         command.execute(client, message, args);
     } catch (e) {
