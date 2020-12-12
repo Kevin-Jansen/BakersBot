@@ -1,5 +1,20 @@
 const Discord = require("discord.js");
 
+const endShowdown = (client, message) => {
+    let winner = null;
+    for (let roll of client.showdown.rolls) {
+        if (winner === null) winner = roll;
+        if (roll.roll > winner.roll) winner = roll;
+    }
+    const embed = new Discord.MessageEmbed();
+    embed.setTitle(
+        `${winner.name} is the winner with a roll of ${winner.roll}!`
+    );
+    embed.setDescription(`Enjoy your ${client.showdown.item}!`);
+    message.channel.send(embed);
+    client.showdown = null;
+}
+
 module.exports = {
     name: "roll",
     description:
@@ -7,10 +22,12 @@ module.exports = {
     guildOnly: true,
     execute(client, message, args) {
         if (args.length > 0) {
-            if (client.showdown)
+            if (client.showdown) {
+                if (args[0] === 'end') return endShowdown(client, message)
                 return message.reply(
                     `One loot showdown at a time you keen bean! We're currently showdowning for ${client.showdown.item}`
                 );
+            }
 
             const item = `${args}`.replace(/,/g, " ");
 
@@ -28,18 +45,7 @@ module.exports = {
 
             // 30 second competition
             setTimeout(() => {
-                let winner = null;
-                for (let roll of client.showdown.rolls) {
-                    if (winner === null) winner = roll;
-                    if (roll.roll > winner.roll) winner = roll;
-                }
-                const embed = new Discord.MessageEmbed();
-                embed.setTitle(
-                    `${winner.name} is the winner with a roll of ${winner.roll}!`
-                );
-                embed.setDescription(`Enjoy your ${client.showdown.item}!`);
-                message.channel.send(embed);
-                client.showdown = null;
+                if (client.showdown) return endShowdown(client, message)
             }, 30000);
         } else {
             if (client.showdown === null && args.length == 0)
