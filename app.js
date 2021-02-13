@@ -6,7 +6,7 @@ const fs = require("fs");
 const config = require("./config.json");
 
 // Construct a new Discord Client
-const client = new Discord.Client();
+const client = new Discord.Client({partials: ["MESSAGE", "CHANNEL", "REACTION"]});
 client.commands = new Discord.Collection();
 client.prefix = config.prefix;
 client.showdown = null;
