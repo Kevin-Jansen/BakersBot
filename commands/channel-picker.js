@@ -10,33 +10,36 @@ module.exports = {
 
     if (channel.id !== role_channel) return message.reply("Oi! This is only intended to be used by admins.");
 
-    const picker = `We provide a lot of text channels for you to explore, in order to keep it clean we serve channels on a opt-in basis. 
+    const emojis = [
+      {icon: '📰', role: 'no-news', text: ' **ESO News:** Live status, pledges, patch notes, weekly stuff.'},
+      {icon: '⚔️', role: 'no-dd', text: ' **DD academy:** Any DD related discussions.'},
+      {icon: '🛡️', role: 'no-tank', text: ' **Tank academy:** Any tanking related discussions.'},
+      {icon: '🚑', role: 'no-healer', text: ' **Healer academy:** Any healer related discussions.'},
+      {icon: '🤺', role: 'no-pvp', text: ' **Bakers PvP:** PvP discussions.'},
+      {icon: '🏡', role: 'no-cribs', text: ' **Housing:** Show your bakers crib.'},
+      {icon: '🤖', role: 'no-bot', text: ' **Bot:** Control our Discord Bots.'},
+    ];
 
-*By ticking an emoji below you will opt-in to the category you wish to see. Tick it again to opt-out.*
+    let picker = `We provide a lot of text channels for you to explore, in order to keep it clean we provide you the option to hide certain channels.\n\n*By ticking an emoji below you will opt-out of the category in case you don't want to see it. Tick it again to opt-in.*\n\n`;
 
-📰  **ESO News:** Live status, pledges, patch notes, weekly stuff.
-🏫  **Bakers Academy:** DD and Healer discussions.
-⚔️ **Bakers PvP:** PvP discussions.
-💰  **Crafting & Trading:** The place where crafting and trading requests can be found.
-🏡  **Housing:** Show your bakers crib.
-🕹️  **Off topic:** Anything off topic such as gaming, memes and pet or food pics.
-🤖  **Bot:** Control our Discord Bots.`;
+    emojis.map(emoji => {
+      picker += `${emoji.icon} ${emoji.text}\n`;
+    });
 
-    const emojis = [{icon: '📰', role: 'news'}, {icon: '🏫', role: 'academy'}, {icon: '⚔️', role: 'pvp'}, {icon: '💰', role: 'crafting'}, {icon: '🏡', role: 'housing'}, {icon: '🕹️', role: 'off-topic'}, {icon: '🤖', role: 'bot-control'}];
     await channel.send(picker)
       .then(async m => {
         emojis.map(emoji => m.react(emoji.icon))
       });
 
     client.on('messageReactionAdd', async (reaction, user) => {
-        if (reaction.message.partial) await reaction.message.fetch();
-        if (reaction.partial) await reaction.fetch();
-        if (user.bot || !reaction.message.guild) return;
+      if (reaction.message.partial) await reaction.message.fetch();
+      if (reaction.partial) await reaction.fetch();
+      if (user.bot || !reaction.message.guild) return;
 
-        if (reaction.message.channel.id === role_channel) {
-          const {role} = emojis.filter(emoji => emoji.icon === reaction.emoji.name)[0];
-          await reaction.message.guild.members.cache.get(user.id).roles.add(reaction.message.guild.roles.cache.find(r => (r.name === role)));
-        }
+      if (reaction.message.channel.id === role_channel) {
+        const {role} = emojis.filter(emoji => emoji.icon === reaction.emoji.name)[0];
+        await reaction.message.guild.members.cache.get(user.id).roles.add(reaction.message.guild.roles.cache.find(r => (r.name === role)));
+      }
     });
 
     client.on('messageReactionRemove', async (reaction, user) => {
