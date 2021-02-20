@@ -9,6 +9,7 @@ module.exports = {
     const {role_channel} = require('../config.json');
 
     if (channel.id !== role_channel) return message.reply("Oi! This is only intended to be used by admins.");
+    if (!message.member.roles.cache.find(r => (r.name === 'Head Glazer' || r.name === 'Master Baker'))) return message.reply(`Oi! This is only intended to be used by admins.`);
 
     const emojis = [
       {icon: '📰', role: 'no-news', text: ' **ESO News:** Live status, pledges, patch notes, weekly stuff.'},
