@@ -33,7 +33,7 @@ jobs:
           options: '--exclude-from="exclude.txt"'
           ssh_options: ''
           src: '/'
-          dest: 'root@server.kevin-jansen.dev:/var/www/vhosts/bakers-bot.com/httpdocs/'
+          dest: 'bakersbot@server.kevin-jansen.dev:httpdocs/'
 
       - name: Display status from deploy
         run: echo "${{steps.deploy.outputs.status}}"
@@ -43,10 +43,8 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: 'server.kevin-jansen.dev'
-          username: 'root'
+          username: 'bakersbot'
           key: ${{secrets.DEPLOY_KEY}}
           port: '22'
           script: |
-            cd /var/www/vhosts/bakers-bot.com
-            chown -R bakers-bot httpdocs/
             pm2 restart bakersbot
