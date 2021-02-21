@@ -12,16 +12,16 @@ module.exports = {
     if (!message.member.roles.cache.find(r => (r.name === 'Head Glazer' || r.name === 'Master Baker'))) return message.reply(`Oi! This is only intended to be used by admins.`);
 
     const emojis = [
-      {icon: '📰', role: 'no-news', text: ' **ESO News:** Live status, pledges, patch notes, weekly stuff.'},
+      {icon: '📰', role: 'no-news', text: ' **ESO News:** ESO server status, pledges, patch notes, weekly vendor, etc'},
       {icon: '⚔️', role: 'no-dd', text: ' **DD academy:** Any DD related discussions.'},
       {icon: '🛡️', role: 'no-tank', text: ' **Tank academy:** Any tanking related discussions.'},
       {icon: '🚑', role: 'no-healer', text: ' **Healer academy:** Any healer related discussions.'},
-      {icon: '🤺', role: 'no-pvp', text: ' **Bakers PvP:** PvP discussions.'},
-      {icon: '🏡', role: 'no-cribs', text: ' **Housing:** Show your bakers crib.'},
-      {icon: '🤖', role: 'no-bot', text: ' **Bot:** Control our Discord Bots.'},
+      {icon: '🤺', role: 'no-pvp', text: ' **Bakers PvP:** Any PvP discussions.'},
+      {icon: '🏡', role: 'no-cribs', text: ' **Housing:** Show off your houses + house related discussions.'},
+      {icon: '🤖', role: 'no-bot', text: ' **Bot:** Control our Discord Bots including the music bots.'},
     ];
 
-    let picker = `We provide a lot of text channels for you to explore, in order to keep it clean we provide you the option to hide certain channels.\n\n*By ticking an emoji below you will opt-out of the category in case you don't want to see it. Tick it again to opt-in.*\n\n`;
+    let picker = `There are dozens of channels in this server and by default, you will be able to see them all. However, we understand that some channels may not be relevant for you and so, you can choose which channels you want to opt out from.\n\n*By ticking an emoji below you will opt-out of the channel and won’t see it on your end anymore. Tick it again to opt back in.*\n\n`;
 
     emojis.map(emoji => {
       picker += `${emoji.icon} ${emoji.text}\n`;
