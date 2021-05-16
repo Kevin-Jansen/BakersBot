@@ -1,6 +1,8 @@
 module.exports = (client, message) => {
     // if a message is sent
-    if (message.author.bot || !message.content.startsWith(client.prefix)) return;
+    if (message.author.bot) return;
+
+    if(!message.content.startsWith(client.prefix)) return;
     // Seeks command
     const args = message.content.slice(client.prefix.length).trim().split(/ +/);
     const commandName = args.shift().toLowerCase();
