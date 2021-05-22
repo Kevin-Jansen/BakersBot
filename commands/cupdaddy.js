@@ -36,7 +36,7 @@ module.exports = {
 				},
 			};
 
-			message.channel.send({ files: [file2], embed: embed });
+			message.channel.send({ files: [file3], embed: embed });
 		} else {
 			return message.reply(
 				"To use this command correctly - use .cupdaddy {argument}. Here are the arguments: - inspire"
