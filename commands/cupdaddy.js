@@ -7,6 +7,7 @@ module.exports = {
 	execute(client, message, args) {
 		const file = new Discord.MessageAttachment("./assets/cupdaddy.png");
 		const file2 = new Discord.MessageAttachment("./assets/purgedaddy.png");
+		const file3 = new Discord.MessageAttachment("./assets/paradaddy.jpg");
 
 		if (args == "inspire") {
 			let embed = {
@@ -23,6 +24,15 @@ module.exports = {
 				title: "When you're debuffed up... What should you shout?",
 				image: {
 					url: "attachment://purgedaddy.png",
+				},
+			};
+
+			message.channel.send({ files: [file2], embed: embed });
+		} else if (args == "para") {
+			let embed = {
+				title: "We all know Cup had a secret crush..",
+				image: {
+					url: "attachment://paradaddy.png",
 				},
 			};
 
