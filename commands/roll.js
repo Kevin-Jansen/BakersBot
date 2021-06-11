@@ -40,6 +40,7 @@ module.exports = {
     // Escape statements for invalid arguments
     if (args.length === 0 && client.showdown) return message.reply('Hey we changed how you roll for gear, just tap ✅ to enter otherwise I\'ll just ignore you')
     if (args.length === 0) return message.reply('Oi! You forgot to give me an item name, shame on you...')
+    if (client.showdown && client.showdown.isActive) return message.reply(`One loot showdown at a time you keen bean! We're currently showdowning for ***${client.showdown.item}***`);
 
     const item = args.toString().replace(/,/g, ' ');
     const issuer = await message.guild.member(message.author);
