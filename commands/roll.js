@@ -121,10 +121,17 @@ module.exports = {
         }
         if (reaction.emoji.name === "❌") {
           const issuer = await reaction.message.guild.members.cache.get(user.id);
-          if (issuer.nickname ? issuer.nickname : issuer.user.username !== client.showdown.issuer)  {
-            return reaction.message.channel.send(`<@${issuer.id}> Ey! No tempering with dem looter roller showdown, cheeky booger! Only the showdown issuer may stop me from ruining your day!`).then(msg => {
-              msg.delete({timeout: 5000})
-            })
+
+          console.log(issuer.nickname ? issuer.nickname : issuer.user.username);
+          console.log(client.showdown.issuer);
+
+          if (issuer.nickname ? issuer.nickname : issuer.user.username !== client.showdown.issuer) {
+            // Just to validate emojis starting in the name
+            if ((issuer.nickname ? issuer.nickname : issuer.user.username).slice(2) !== client.showdown.issuer.slice(2)) {
+              return reaction.message.channel.send(`<@${issuer.id}> Ey! No tempering with dem looter roller showdown, cheeky booger! Only the showdown issuer may stop me from ruining your day!`).then(msg => {
+                msg.delete({timeout: 5000})
+              })
+            }
           }
 
           endShowdown(client, reaction.message)
