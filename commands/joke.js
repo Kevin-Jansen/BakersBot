@@ -10,10 +10,21 @@ module.exports = {
             .then(response => response.json())
             .catch(console.error);
 
-        const embed = new Discord.MessageEmbed();
-        embed.setTitle(setup);
-        embed.setDescription(punchline);
+        const embed = {
+            "title": setup,
+            "description": punchline,
+            "color": 13625642,
+            "timestamp": new Date(),
+            "author": {
+                "name": "The Master Bakers Patented Dad-Joke Teller™️",
+                "icon_url": "https://cdn.discordapp.com/icons/733739130156220556/a_835c788d749b465248280d44e2c72482.png?size=128"
+            },
+            "footer": {
+                "icon_url": message.author.displayAvatarURL(),
+                "text": `gg ez`
+            },
+        };
 
-        await message.channel.send(embed);
+        await message.channel.send({embed: embed});
     }
 }

@@ -1,5 +1,3 @@
-const Discord = require("discord.js");
-
 const endShowdown = (client, message) => {
   client.showdown.isActive = false;
   message.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error));
@@ -13,7 +11,6 @@ const endShowdown = (client, message) => {
     });
     return message.edit({embed: embed});
   }
-  ;
 
   let winner = null;
   for (let participant of client.showdown.participants) {
