@@ -48,6 +48,11 @@ console.log("All event are being watched.");
 client.once("ready", () => {
   console.log("Bakers Bot is ready to Rock & Roll!");
 
+  client.user.setActivity('Baking Cupcakes', {
+    status: 'online',
+    type: 'WATCHING'
+  })
+
   // Notify the server that the bot is back online if app is in production mode
   if (config.environment === 'production') {
     const notify = client.channels.cache.get(config.notify_channel);
